@@ -13,14 +13,15 @@ import com.vbwd.plugin.tokenpayment.ui.TokenQuoteSection
  * `PaymentMethodToken_balance` section + the `token_balance` payment action.
  */
 class TokenPaymentPlugin : Plugin {
-    override val metadata = PluginMetadata(
-        name = "token-payment",
-        version = SemanticVersion(1, 0, 0),
-        description = "Pay with your token balance — instant, no redirect.",
-        author = "VBWD",
-        keywords = listOf("payment", "tokens"),
-        translations = mapOf("en" to TRANSLATIONS),
-    )
+    override val metadata =
+        PluginMetadata(
+            name = "token-payment",
+            version = SemanticVersion(1, 0, 0),
+            description = "Pay with your token balance — instant, no redirect.",
+            author = "VBWD",
+            keywords = listOf("payment", "tokens"),
+            translations = mapOf("en" to TRANSLATIONS),
+        )
 
     override suspend fun install(sdk: PlatformSdk) {
         val api = sdk.api
@@ -33,11 +34,12 @@ class TokenPaymentPlugin : Plugin {
     }
 
     private companion object {
-        val TRANSLATIONS = mapOf(
-            "token_payment.balance" to "Token balance now",
-            "token_payment.cost" to "Tokens to pay",
-            "token_payment.after" to "Balance after payment",
-            "token_payment.insufficient" to "Not enough tokens to pay this order.",
-        )
+        val TRANSLATIONS =
+            mapOf(
+                "token_payment.balance" to "Token balance now",
+                "token_payment.cost" to "Tokens to pay",
+                "token_payment.after" to "Balance after payment",
+                "token_payment.insufficient" to "Not enough tokens to pay this order.",
+            )
     }
 }

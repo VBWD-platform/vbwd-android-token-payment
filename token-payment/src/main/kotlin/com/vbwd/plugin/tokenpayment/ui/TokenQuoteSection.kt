@@ -28,11 +28,12 @@ private val ROW_SPACING = 8.dp
 fun TokenQuoteSection(api: ApiClient) {
     val info = LocalCheckoutInfo.current
     val quote by produceState<TokenQuote?>(initialValue = null, info) {
-        value = if (info.amount > 0) {
-            runCatching { TokenPaymentService(api).fetchQuote(info.amount, info.currency) }.getOrNull()
-        } else {
-            null
-        }
+        value =
+            if (info.amount > 0) {
+                runCatching { TokenPaymentService(api).fetchQuote(info.amount, info.currency) }.getOrNull()
+            } else {
+                null
+            }
     }
 
     Column(

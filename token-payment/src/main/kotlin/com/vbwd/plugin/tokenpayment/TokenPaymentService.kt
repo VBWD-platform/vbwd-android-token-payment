@@ -19,9 +19,10 @@ data class TokenQuote(
 
 /** API calls for the token-payment backend plugin. Port of the iOS service. */
 class TokenPaymentService(private val api: ApiClient) {
-
-    suspend fun fetchQuote(amount: Double, currency: String): TokenQuote =
-        api.get("/plugins/token-payment/quote?amount=$amount&currency=$currency")
+    suspend fun fetchQuote(
+        amount: Double,
+        currency: String,
+    ): TokenQuote = api.get("/plugins/token-payment/quote?amount=$amount&currency=$currency")
 
     suspend fun payWithTokens(invoiceId: String) {
         api.post<EmptyBody, EmptyResponse>("/plugins/token-payment/invoices/$invoiceId/pay", EmptyBody())

@@ -22,21 +22,27 @@ private class FakeApi : ApiClient {
         jsonBody: String?,
         deserializer: DeserializationStrategy<T>,
     ): T = EmptyResponse() as T
+
     override fun setToken(token: String?) = Unit
-    override fun on(event: ApiEvent, handler: () -> Unit) = Unit
+
+    override fun on(
+        event: ApiEvent,
+        handler: () -> Unit,
+    ) = Unit
 }
 
 class TokenPaymentPluginContractTest {
     private fun sdk() = DefaultPlatformSdk(FakeApi(), ApiClientConfig("http://x"), DefaultEventBus(FakeApi()))
 
     @Test
-    fun `install registers the section, the payment action and translations`() = runTest {
-        val platform = sdk()
-        TokenPaymentPlugin().install(platform)
+    fun `install registers the section, the payment action and translations`() =
+        runTest {
+            val platform = sdk()
+            TokenPaymentPlugin().install(platform)
 
-        assertTrue(platform.getComponents().containsKey("PaymentMethodToken_balance"))
-        assertNotNull(platform.components.paymentAction("token_balance"))
-        assertTrue(platform.components.supportedPaymentMethodCodes().contains("token_balance"))
-        assertEquals("Token balance now", platform.getTranslations()["en"]?.get("token_payment.balance"))
-    }
+            assertTrue(platform.getComponents().containsKey("PaymentMethodToken_balance"))
+            assertNotNull(platform.components.paymentAction("token_balance"))
+            assertTrue(platform.components.supportedPaymentMethodCodes().contains("token_balance"))
+            assertEquals("Token balance now", platform.getTranslations()["en"]?.get("token_payment.balance"))
+        }
 }
